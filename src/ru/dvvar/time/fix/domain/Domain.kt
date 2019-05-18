@@ -5,7 +5,9 @@ import java.util.*
 
 data class Activity(val name: String, val minutesInDate: SortedMap<LocalDate, Minute>)
 
-data class User(val id: Int, val username: String, val activities: Set<Activity>)
+data class User(val id: Int, val username: String, val activities: Set<Activity>) {
+    constructor(id: Int, username: String) : this(id, username, setOf())
+}
 
 typealias Minute = Int
 
