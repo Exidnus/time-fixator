@@ -1,4 +1,4 @@
-package ru.dvvar.time.fix.da
+package ru.dvvar.time.fix.port.da
 
 import ru.dvvar.time.fix.bl.Result
 import ru.dvvar.time.fix.domain.User

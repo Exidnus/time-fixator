@@ -1,7 +1,7 @@
 package ru.dvvar.time.fix.bl
 
-import ru.dvvar.time.fix.da.IUserDa
 import ru.dvvar.time.fix.domain.User
+import ru.dvvar.time.fix.port.da.IUserDa
 
 data class Result<T>(val isSuccess: Boolean, val obj: T?, val msg: String?)
 
