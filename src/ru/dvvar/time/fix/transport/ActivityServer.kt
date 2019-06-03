@@ -5,6 +5,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.routing.Routing
+import io.ktor.routing.delete
 import io.ktor.routing.post
 import io.ktor.routing.put
 import ru.dvvar.time.fix.port.rest.ActivityPort
@@ -16,6 +17,11 @@ class ActivityServer(private val activityPort: ActivityPort) : AbstractServer() 
         post("$VERSION_V1_PREFIX/create_activity") {
             val newActivity = call.receive<ChangeActivity>()
             val result = activityPort.addActivity(newActivity)
+            call.respond(HttpStatusCode.OK, result)
+        }
+        delete("$VERSION_V1_PREFIX/delete_activity") {
+            val activityForDelete = call.receive<ChangeActivity>()
+            val result = activityPort.removeActivity(activityForDelete)
             call.respond(HttpStatusCode.OK, result)
         }
         put("$VERSION_V1_PREFIX/rename_activity") {

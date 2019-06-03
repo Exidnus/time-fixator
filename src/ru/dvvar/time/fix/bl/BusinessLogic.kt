@@ -1,15 +1,17 @@
 package ru.dvvar.time.fix.bl
 
 import ru.dvvar.time.fix.domain.User
-import ru.dvvar.time.fix.port.da.IUserDa
+import ru.dvvar.time.fix.port.da.UserDa
 
-data class Result<T>(val isSuccess: Boolean, val obj: T?, val msg: String?)
+data class Result<T>(val isSuccess: Boolean, val obj: T?, val msg: String?) {
+    constructor(isSuccess: Boolean, obj: T?) : this(isSuccess, obj, null)
+}
 
 interface IUserService {
     fun createUser(username: String): Result<User>
 }
 
-class UserService(userDa: IUserDa) : IUserService {
+class UserService(userDa: UserDa) : IUserService {
     override fun createUser(username: String): Result<User> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
