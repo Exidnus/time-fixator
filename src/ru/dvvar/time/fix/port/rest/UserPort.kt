@@ -12,13 +12,17 @@ data class RenamingUser(val id: Int, val newName: String)
 
 interface UserPort {
     fun createUser(newUser: NewUser): Result<User>
+
     fun removeUser(removingUser: RemovingUser): BooleanResult
+
     fun renameUser(renamingUser: RenamingUser): BooleanResult
 }
 
 class UserPortAdapter(private val userDa: UserDa) : UserPort {
     override fun createUser(newUser: NewUser): Result<User> = userDa.createUser(newUser.username)
+
     override fun removeUser(removingUser: RemovingUser): BooleanResult = userDa.removeUser(removingUser.id)
+
     override fun renameUser(renamingUser: RenamingUser): BooleanResult {
         val user = userDa.findUser(renamingUser.id) ?: return BooleanResult(false)
         val renamedUser = changeUsername(user, renamingUser.newName)
