@@ -8,8 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 interface UserDa {
     fun createUser(username: String): Result<User>
+    fun findUser(id: Int): User?
     fun removeUser(id: Int): BooleanResult
-    fun renameUser(id: Int, newName: String): BooleanResult
+    fun updateUser(user: User): BooleanResult
 }
 
 class UserDaInMemory : UserDa {
@@ -23,13 +24,12 @@ class UserDaInMemory : UserDa {
         return Result(true, user)
     }
 
+    override fun findUser(id: Int): User? = users[id]
+
     override fun removeUser(id: Int): BooleanResult = BooleanResult(users.remove(id) != null)
 
-    override fun renameUser(id: Int, newName: String): BooleanResult {
-        val user = users[id] ?: return BooleanResult(false)
-
-        val renamedUser = User(user.id, newName, user.activities)
-        users[id] = renamedUser
-        return BooleanResult(true)
+    override fun updateUser(user: User): BooleanResult {
+        val wasUpdated = users.computeIfPresent(user.id) { _, _ -> user } != null
+        return BooleanResult(wasUpdated)
     }
 }

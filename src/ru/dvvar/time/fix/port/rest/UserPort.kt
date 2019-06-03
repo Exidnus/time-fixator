@@ -3,6 +3,7 @@ package ru.dvvar.time.fix.port.rest
 import ru.dvvar.time.fix.bl.BooleanResult
 import ru.dvvar.time.fix.bl.Result
 import ru.dvvar.time.fix.domain.User
+import ru.dvvar.time.fix.domain.changeUsername
 import ru.dvvar.time.fix.port.da.UserDa
 
 data class NewUser(val username: String)
@@ -18,6 +19,10 @@ interface UserPort {
 class UserPortAdapter(private val userDa: UserDa) : UserPort {
     override fun createUser(newUser: NewUser): Result<User> = userDa.createUser(newUser.username)
     override fun removeUser(removingUser: RemovingUser): BooleanResult = userDa.removeUser(removingUser.id)
-    override fun renameUser(renamingUser: RenamingUser): BooleanResult =
-        userDa.renameUser(renamingUser.id, renamingUser.newName)
+    override fun renameUser(renamingUser: RenamingUser): BooleanResult {
+        val user = userDa.findUser(renamingUser.id) ?: return BooleanResult(false)
+        val renamedUser = changeUsername(user, renamingUser.newName)
+        userDa.updateUser(renamedUser)
+        return BooleanResult(true)
+    }
 }
