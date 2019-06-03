@@ -1,5 +1,6 @@
 package ru.dvvar.time.fix.port.da
 
+import ru.dvvar.time.fix.bl.BooleanResult
 import ru.dvvar.time.fix.bl.Result
 import ru.dvvar.time.fix.domain.User
 import java.util.concurrent.ConcurrentHashMap
@@ -7,8 +8,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 interface UserDa {
     fun createUser(username: String): Result<User>
-    fun removeUser(id: Int): Result<Boolean>
-    fun renameUser(id: Int, newName: String): Result<Boolean>
+    fun removeUser(id: Int): BooleanResult
+    fun renameUser(id: Int, newName: String): BooleanResult
 }
 
 class UserDaInMemory : UserDa {
@@ -22,12 +23,13 @@ class UserDaInMemory : UserDa {
         return Result(true, user)
     }
 
-    override fun removeUser(id: Int): Result<Boolean> {
-        users.remove(id) != null
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun removeUser(id: Int): BooleanResult = BooleanResult(users.remove(id) != null)
 
-    override fun renameUser(id: Int, newName: String): Result<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun renameUser(id: Int, newName: String): BooleanResult {
+        val user = users[id] ?: return BooleanResult(false)
+
+        val renamedUser = User(user.id, newName, user.activities)
+        users[id] = renamedUser
+        return BooleanResult(true)
     }
 }

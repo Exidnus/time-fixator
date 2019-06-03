@@ -7,6 +7,8 @@ data class Result<T>(val isSuccess: Boolean, val obj: T?, val msg: String?) {
     constructor(isSuccess: Boolean, obj: T?) : this(isSuccess, obj, null)
 }
 
+data class BooleanResult(val isSuccess: Boolean)
+
 interface IUserService {
     fun createUser(username: String): Result<User>
 }
