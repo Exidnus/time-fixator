@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<h1>Enter name of new user</h1>
+<input type="text" id="input-username-field">
+<p/>
+<button id="create-button" onclick="createUserName()">Create</button>
+
+<script>
+    function createUserName() {
+        const usernameInputField = document.getElementById("input-username-field");
+        const username = usernameInputField.value;
+        const xhr = new XMLHttpRequest();
+        const url = "localhost:4444/v1/create_user";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = () => {
+            usernameInputField.value = "";
+        };
+        const data = JSON.stringify({
+            "username": username
+        });
+        console.log("sending data " + data);
+        xhr.send(data);
+    }
+</script>
+</body>
+</html>

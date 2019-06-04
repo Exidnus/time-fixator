@@ -15,7 +15,7 @@ fun changeUsername(user: User, newUserName: String): User =
     User(user.id, newUserName, user.activities)
 
 fun addActivity(user: User, activity: Activity): User =
-    changeActivities(user) { it - activity }
+        changeActivities(user) { it + activity }
 
 fun removeActivity(user: User, activity: Activity): User =
     changeActivities(user) { it - activity }
