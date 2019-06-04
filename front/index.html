@@ -11,9 +11,10 @@
         const usernameInputField = document.getElementById("input-username-field");
         const username = usernameInputField.value;
         const xhr = new XMLHttpRequest();
-        const url = "localhost:4444/v1/create_user";
+        const url = "http://localhost:4444/v1/create_user";
         xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.setRequestHeader("Content-Type", "application/json");
+        // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhr.onreadystatechange = () => {
             usernameInputField.value = "";
         };
