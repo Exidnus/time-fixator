@@ -13,8 +13,7 @@
         const xhr = new XMLHttpRequest();
         const url = "http://localhost:4444/v1/create_user";
         xhr.open("POST", url, true);
-        // xhr.setRequestHeader("Content-Type", "application/json");
-        // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhr.setRequestHeader("Content-Type", "application/json");
         xhr.onreadystatechange = () => {
             usernameInputField.value = "";
         };

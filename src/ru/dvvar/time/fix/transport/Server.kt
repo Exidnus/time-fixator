@@ -1,6 +1,7 @@
 package ru.dvvar.time.fix.transport
 
 import io.ktor.application.install
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.jackson.jackson
 import io.ktor.routing.Routing
@@ -18,21 +19,10 @@ abstract class AbstractServer {
 
                 }
             }
+            install(CORS) {
+                anyHost()
+            }
             routing(routingConfiguration())
-//            routing {
-//                //            get("/") { call.respondText("Hello, world!", ContentType.Text.Plain) }
-//                post("$VERSION_V1_PREFIX/create_user") {
-//                    val newUser = call.receive<NewUser>()
-//                    val result = userDa.createUser(newUser.username)
-//                    call.respond(HttpStatusCode.OK, result)
-//                }
-//                post("$VERSION_V1_PREFIX/add_activity") {
-//                }
-//                post("$VERSION_V1_PREFIX/remove_activity") {
-//                    val changeActivity = call.receive<ChangeActivity>()
-//
-//                }
-//            }
         }
         server.start(wait = true)
     }
