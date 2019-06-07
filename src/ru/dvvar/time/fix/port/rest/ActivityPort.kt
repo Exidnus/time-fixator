@@ -21,7 +21,5 @@ class ActivityPortAdapter(private val activityDa: ActivityDa) : ActivityPort {
 
     override fun renameActivity(renameActivity: RenameActivity): BooleanResult = activityDa.renameActivity(renameActivity)
 
-    override fun fixateTime(fixateTime: FixateTime): BooleanResult {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun fixateTime(fixateTime: FixateTime): BooleanResult = activityDa.fixateTime(fixateTime)
 }
